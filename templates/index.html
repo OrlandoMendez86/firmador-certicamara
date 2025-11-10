@@ -155,7 +155,8 @@
         const visibleSignCheck = document.getElementById('visible_sign_check');
         const stampGroup = document.getElementById('stamp_group');
         const visibleSignGroup = document.getElementById('visible_sign_group');
-        const signatureTextInput = document.getElementById('signature_text');
+        // ¡Referencia que faltaba!
+        const signatureTextInput = document.getElementById('signature_text'); 
 
         // --- 2. Referencias a elementos del Previewer ---
         const previewButton = document.getElementById('preview-pdf-button');
@@ -184,27 +185,25 @@
             visibleSignGroup.style.display = visibleSignCheck.checked ? 'block' : 'none';
         });
 
-        // --- 5. Lógica de Auto-llenado de Texto de Firma ---
+        // --- 5. Lógica de Auto-llenado de Texto de Firma (¡Restaurada!) ---
         function updateSignatureText() {
             if (serialSelect.options.length === 0 || serialSelect.selectedIndex === -1) {
-                signatureTextInput.value = "";
+                signatureTextInput.value = ""; // Limpia si no hay seriales
                 return;
             }
+            // Obtiene la opción seleccionada
             const selectedOption = serialSelect.options[serialSelect.selectedIndex];
+            // Revisa si guardamos el 'cn' en el 'dataset'
             if (selectedOption && selectedOption.dataset.cn) {
                 const cn = selectedOption.dataset.cn;
                 signatureTextInput.value = `Firmado digitalmente por: ${cn}`;
             }
         }
 
-        // --- 6. Lógica para Obtener Seriales (CON FIX DE DUPLICADOS) ---
+        // --- 6. Lógica para Obtener Seriales (Completa) ---
         fetchButton.addEventListener('click', async () => {
             statusDiv.innerText = "Cargando seriales...";
-            
-            // --- *** ¡AQUÍ ESTÁ LA CORRECCIÓN #1! *** ---
-            // Limpia las opciones antiguas antes de añadir nuevas
-            serialSelect.innerHTML = ""; 
-            
+            serialSelect.innerHTML = ""; // Limpia opciones antiguas (evita duplicados)
             serialSelect.disabled = true;
             signButton.disabled = true;
             try {
@@ -227,14 +226,14 @@
                     const option = document.createElement('option');
                     option.value = cert.serial;
                     option.text = `Nombre: ${cert.cn} (Uso: ${cert.ou})`;
-                    option.dataset.cn = cert.cn; // Guarda el CN
+                    option.dataset.cn = cert.cn; // ¡Guarda el CN!
                     serialSelect.appendChild(option);
                 });
 
                 statusDiv.innerText = "Certificados cargados. Listo para firmar.";
                 serialSelect.disabled = false;
                 signButton.disabled = false;
-                updateSignatureText(); // Auto-llena el texto de firma
+                updateSignatureText(); // ¡Auto-llena el texto!
 
             } catch (err) {
                 statusDiv.innerText = `Error: ${err.message}`;
@@ -365,23 +364,43 @@
             selectionRect.endX = 0;
         }
 
-        // --- 9. LÓGICA: Dibujo en Canvas ---
-        pdfCanvas.addEventListener('mousedown', (e) => {
-            if (!pageSnapshot) return; 
-            const rect = pdfCanvas.getBoundingClientRect();
-            selectionRect.startX = e.clientX - rect.left;
-            selectionRect.startY = e.clientY - rect.top;
-            selectionRect.isDrawing = true;
-        });
+        // --- 9. LÓGICA: Dibujo en Canvas (¡¡ACTUALIZADA PARA TÁCTIL!!) ---
 
-        pdfCanvas.addEventListener('mousemove', (e) => {
+        // Función unificada para obtener coordenadas (Mouse o Táctil)
+        function getEventCoords(e) {
+            if (e.touches && e.touches.length > 0) {
+                // Evento Táctil
+                return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            }
+            // Evento Mouse
+            return { x: e.clientX, y: e.clientY };
+        }
+
+        function onDrawStart(e) {
+            if (!pageSnapshot) return; 
+            e.preventDefault(); // Previene scroll/zoom en celular
+            
+            const rect = pdfCanvas.getBoundingClientRect();
+            const coords = getEventCoords(e);
+            
+            selectionRect.startX = coords.x - rect.left;
+            selectionRect.startY = coords.y - rect.top;
+            selectionRect.isDrawing = true;
+        }
+
+        function onDrawMove(e) {
             if (!selectionRect.isDrawing || !pageSnapshot) return;
+            e.preventDefault(); // ¡MUY IMPORTANTE para que no se mueva la página!
+            
             ctx.putImageData(pageSnapshot, 0, 0); // Restaura la "foto"
 
             const rect = pdfCanvas.getBoundingClientRect();
-            selectionRect.endX = e.clientX - rect.left;
-            selectionRect.endY = e.clientY - rect.top;
+            const coords = getEventCoords(e);
+            
+            selectionRect.endX = coords.x - rect.left;
+            selectionRect.endY = coords.y - rect.top;
 
+            // Dibuja el recuadro
             ctx.strokeStyle = 'rgba(212, 8, 9, 1)'; // Rojo Certicámara
             ctx.lineWidth = 3;
             ctx.fillStyle = 'rgba(212, 8, 9, 0.2)'; // Rojo Certicámara (transparente)
@@ -391,13 +410,28 @@
             
             ctx.fillRect(selectionRect.startX, selectionRect.startY, width, height);
             ctx.strokeRect(selectionRect.startX, selectionRect.startY, width, height);
-        });
+        }
 
-        pdfCanvas.addEventListener('mouseup', () => {
+        function onDrawEnd(e) {
+            if (!selectionRect.isDrawing) return;
+            e.preventDefault();
             selectionRect.isDrawing = false;
-        });
+        }
+
+        // Asignar eventos de Mouse
+        pdfCanvas.addEventListener('mousedown', onDrawStart);
+        pdfCanvas.addEventListener('mousemove', onDrawMove);
+        pdfCanvas.addEventListener('mouseup', onDrawEnd);
+        pdfCanvas.addEventListener('mouseleave', onDrawEnd); // Seguridad si el mouse se sale
+
+        // Asignar eventos Táctiles (para celulares)
+        pdfCanvas.addEventListener('touchstart', onDrawStart, { passive: false });
+        pdfCanvas.addEventListener('touchmove', onDrawMove, { passive: false });
+        pdfCanvas.addEventListener('touchend', onDrawEnd);
+        pdfCanvas.addEventListener('touchcancel', onDrawEnd); // Seguridad si se interrumpe
 
         // --- 10. LÓGICA: Confirmar Selección (Coordenadas) ---
+        
         confirmSelectionButton.addEventListener('click', () => {
             if (selectionRect.startX === selectionRect.endX || !lastRenderedPage) {
                 alert("No ha seleccionado un área.");
@@ -428,7 +462,7 @@
             previewModal.style.display = 'none';
         });
 
-        // --- 11. Evento para actualizar texto de firma al cambiar serial ---
+        // --- 11. Evento para actualizar texto de firma al cambiar serial (¡Restaurado!) ---
         serialSelect.addEventListener('change', updateSignatureText);
 
     </script>
