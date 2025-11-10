@@ -389,6 +389,7 @@ button#sign-button:disabled {
     box-shadow: var(--shadow-md);
     cursor: crosshair;
     border: 1px solid var(--color-border);
+    touch-action: none; /* <-- ¡ESTA ES LA LÍNEA MÁGICA! */
 }
 
 .modal-footer {
@@ -567,3 +568,4 @@ a.button-link-primary:hover {
     }
 
 }
+
