@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firmador Web Certicámara</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js"></script>
+
+</head>
+<body>
+    
+    <form id="sign-form">
+        <div class="form-header">
+            <h1 class="brand-title">certicámara</h1>
+            <p class="brand-slogan">Validez y seguridad jurídica electrónica</p>
+        </div>
+
+        <h2>Paso 1: Credenciales</h2>
+        <label for="nuip">NUIP:</label>
+        <input type="text" id="nuip" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+        
+        <button type="button" id="fetch-button">1. Obtener Seriales</button>
+        <a href="https://ventadigital.certicamara.com/" target="_blank" class="button-link-primary">
+        🛒 ¿No tienes firma? Cómprala aquí
+    </a>
+
+        <h2>Paso 2: Certificado y Archivo</h2>
+        <label for="serial-select">Serial:</label>
+        <select id="serial-select" required disabled></select>
+        
+        <label for="pdf-file">Archivo PDF:</label>
+        <div class="file-input-container">
+            <input type="file" id="pdf-file" accept=".pdf" required>
+        </div>
+
+
+        <h2>Paso 3: Opciones de Firma</h2>
+        
+        <label class="checkbox-container" for="ltv_check">
+            <input type="checkbox" id="ltv_check">
+            <span class="checkbox-indicator"></span>
+            🔒 LTV (Long Term Validation)
+        </label>
+        
+        <label class="checkbox-container" for="stamp_check">
+            <input type="checkbox" id="stamp_check">
+            <span class="checkbox-indicator"></span>
+            ⏱️ Stamp (Sello de tiempo - TSA)
+        </label>
+        
+        <label class="checkbox-container" for="visible_sign_check">
+            <input type="checkbox" id="visible_sign_check">
+            <span class="checkbox-indicator"></span>
+            ✏️ Firma Visible (con imagen)
+        </label>
+        
+        <div class="settings-group" id="stamp_group">
+            <h3>⏱️ Configuración de Stamp (TSA)</h3>
+            <label for="stamp_user">Usuario Stamp:</label>
+            <input type="text" id="stamp_user">
+            
+            <label for="stamp_pass">Password Stamp:</label>
+            <input type="password" id="stamp_pass">
+        </div>
+
+        <div class="settings-group" id="visible_sign_group">
+            <h3>✏️ Configuración de Firma Visible</h3>
+            
+            <label for="image_file">Imagen de la firma (.png, .jpg):</label>
+            <div class="file-input-container">
+                <input type="file" id="image_file" accept="image/png, image/jpeg">
+                <button type="button" id="preview-pdf-button" class="button-secondary" disabled>🔍 Previsualizar</button>
+            </div>
+
+            <label for="signature_text">Texto de firma:</label>
+            <input type="text" id="signature_text" placeholder="Ej: Firmado digitalmente por...">
+            
+            <label for="sign_field_name">Nombre del campo:</label>
+            <input type="text" id="sign_field_name" value="Firma1">
+            
+            <label for="rendering_mode">Modo de renderizado:</label>
+            <select id="rendering_mode">
+                <option value="GRAPHIC_AND_DESCRIPTION">Gráfico y Descripción</option>
+                <option value="GRAPHIC">Solo Gráfico</option>
+                <option value="DESCRIPTION">Solo Descripción</option>
+            </select>
+            
+            <label for="pages">Páginas (separadas por coma):</label>
+            <input type="text" id="pages" value="1">
+
+            <label>Coordenadas (Seleccione con el previsualizador):</label>
+            <div class="coords-grid">
+                <span></span>
+                <span>X (izq-der)</span>
+                <span>Y (abajo-arriba)</span>
+                
+                <label for="lowerLeftX">Esquina Inferior Izq:</label>
+                <input type="number" id="lowerLeftX" value="100" readonly>
+                <input type="number" id="lowerLeftY" value="150" readonly>
+                
+                <label for="upperRightX">Esquina Superior Der:</label>
+                <input type="number" id="upperRightX" value="300" readonly>
+                <input type="number" id="upperRightY" value="230" readonly>
+            </div>
+            <div id="coord-info" class="status-info-box">
+                ℹ️ Use el botón "Previsualizar" para seleccionar el área.
+            </div>
+        </div>
+
+        <br>
+        <button type="submit" id="sign-button" disabled>🚀 Firmar Documento</button>
+    </form>
+    
+    <div id="status"></div>
+
+    <div id="pdf-preview-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📄 Previsualización de PDF - Seleccione el área</h2>
+                <button id="close-modal-button" class="close-button">&times;</button>
+            </div>
+            <div class="modal-controls">
+                <span>Página:</span>
+                <input type="number" id="page-num-input" value="1" min="1">
+                <span>/ <span id="page-count-span">?</span></span>
+            </div>
+            <div class="modal-body">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-selection-button" class="button-primary">✅ Confirmar Selección</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- 1. Referencias a elementos del DOM ---
+        const nuipInput = document.getElementById('nuip');
+        const passInput = document.getElementById('password');
+        const fetchButton = document.getElementById('fetch-button');
+        const serialSelect = document.getElementById('serial-select');
+        const signButton = document.getElementById('sign-button');
+        const signForm = document.getElementById('sign-form');
+        const pdfFile = document.getElementById('pdf-file');
+        const statusDiv = document.getElementById('status');
+        const ltvCheck = document.getElementById('ltv_check');
+        const stampCheck = document.getElementById('stamp_check');
+        const visibleSignCheck = document.getElementById('visible_sign_check');
+        const stampGroup = document.getElementById('stamp_group');
+        const visibleSignGroup = document.getElementById('visible_sign_group');
+        const signatureTextInput = document.getElementById('signature_text');
+
+        // --- 2. Referencias a elementos del Previewer ---
+        const previewButton = document.getElementById('preview-pdf-button');
+        const previewModal = document.getElementById('pdf-preview-modal');
+        const closeModalButton = document.getElementById('close-modal-button');
+        const confirmSelectionButton = document.getElementById('confirm-selection-button');
+        const pdfCanvas = document.getElementById('pdf-canvas');
+        const pageNumInput = document.getElementById('page-num-input');
+        const pageCountSpan = document.getElementById('page-count-span');
+        const ctx = pdfCanvas.getContext('2d');
+
+        // --- 3. Variables Globales para el PDF ---
+        let pdfDoc = null;
+        let currentPageNum = 1;
+        let pdfScale = 1.5; 
+        let selectionRect = { startX: 0, startY: 0, endX: 0, endY: 0, isDrawing: false };
+        let lastRenderedPage = null; 
+        let pageSnapshot = null; 
+
+        
+        // --- 4. Lógica de Opciones (Checkboxes) ---
+        stampCheck.addEventListener('change', () => {
+            stampGroup.style.display = stampCheck.checked ? 'block' : 'none';
+        });
+        visibleSignCheck.addEventListener('change', () => {
+            visibleSignGroup.style.display = visibleSignCheck.checked ? 'block' : 'none';
+        });
+
+        // --- 5. Lógica de Auto-llenado de Texto de Firma ---
+        function updateSignatureText() {
+            if (serialSelect.options.length === 0 || serialSelect.selectedIndex === -1) {
+                signatureTextInput.value = "";
+                return;
+            }
+            const selectedOption = serialSelect.options[serialSelect.selectedIndex];
+            if (selectedOption && selectedOption.dataset.cn) {
+                const cn = selectedOption.dataset.cn;
+                signatureTextInput.value = `Firmado digitalmente por: ${cn}`;
+            }
+        }
+
+        // --- 6. Lógica para Obtener Seriales (CON FIX DE DUPLICADOS) ---
+        fetchButton.addEventListener('click', async () => {
+            statusDiv.innerText = "Cargando seriales...";
+            
+            // --- *** ¡AQUÍ ESTÁ LA CORRECCIÓN #1! *** ---
+            // Limpia las opciones antiguas antes de añadir nuevas
+            serialSelect.innerHTML = ""; 
+            
+            serialSelect.disabled = true;
+            signButton.disabled = true;
+            try {
+                const response = await fetch('/api/get-certificates', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nuip: nuipInput.value, password: passInput.value })
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.details || 'Error al obtener certificados');
+                
+                const certificates = data.listCertificateResponse;
+                if (!certificates || certificates.length === 0) {
+                     statusDiv.innerText = "No se encontraron certificados.";
+                     updateSignatureText(); // Limpia el campo de texto
+                     return;
+                }
+
+                certificates.forEach(cert => {
+                    const option = document.createElement('option');
+                    option.value = cert.serial;
+                    option.text = `Nombre: ${cert.cn} (Uso: ${cert.ou})`;
+                    option.dataset.cn = cert.cn; // Guarda el CN
+                    serialSelect.appendChild(option);
+                });
+
+                statusDiv.innerText = "Certificados cargados. Listo para firmar.";
+                serialSelect.disabled = false;
+                signButton.disabled = false;
+                updateSignatureText(); // Auto-llena el texto de firma
+
+            } catch (err) {
+                statusDiv.innerText = `Error: ${err.message}`;
+                updateSignatureText(); // Limpia el campo de texto
+            }
+        });
+
+        // --- 7. Lógica de Firma (Formulario Principal) ---
+        signForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            statusDiv.innerText = "Firmando documento, por favor espere...";
+            signButton.disabled = true;
+            const formData = new FormData();
+            formData.append('pdf_file', pdfFile.files[0]);
+            formData.append('cert_nuip', nuipInput.value);
+            formData.append('cert_password', passInput.value);
+            formData.append('cert_serial', serialSelect.value);
+            formData.append('ltv', ltvCheck.checked);
+            formData.append('stamp', stampCheck.checked);
+            formData.append('visibleSign', visibleSignCheck.checked);
+            if (stampCheck.checked) {
+                formData.append('stampUser', document.getElementById('stamp_user').value);
+                formData.append('stampPass', document.getElementById('stamp_pass').value);
+            }
+            if (visibleSignCheck.checked) {
+                const imageInput = document.getElementById('image_file');
+                if (imageInput.files.length > 0) formData.append('image_file', imageInput.files[0]);
+                formData.append('signatureText', document.getElementById('signature_text').value);
+                formData.append('signFieldName', document.getElementById('sign_field_name').value);
+                formData.append('renderingMode', document.getElementById('rendering_mode').value);
+                formData.append('pages', document.getElementById('pages').value);
+                formData.append('lowerLeftX', document.getElementById('lowerLeftX').value);
+                formData.append('lowerLeftY', document.getElementById('lowerLeftY').value);
+                formData.append('upperRightX', document.getElementById('upperRightX').value);
+                formData.append('upperRightY', document.getElementById('upperRightY').value);
+            }
+            try {
+                const response = await fetch('/api/sign-pdf', { method: 'POST', body: formData });
+                if (!response.ok) {
+                    const errData = await response.json();
+                    throw new Error(errData.error || 'Error desconocido al firmar.');
+                }
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'documento_firmado.pdf';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+                statusDiv.innerText = "¡PDF Firmado y descargado!";
+                signButton.disabled = false;
+            } catch (err) {
+                statusDiv.innerText = `Error: ${err.message}`;
+                signButton.disabled = false;
+            }
+        });
+
+        // --- 8. LÓGICA: Previsualización de PDF ---
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+
+        pdfFile.addEventListener('change', () => {
+            if (pdfFile.files.length > 0) {
+                previewButton.disabled = false;
+                loadPdf(pdfFile.files[0]); 
+            } else {
+                previewButton.disabled = true;
+                pdfDoc = null;
+            }
+        });
+
+        previewButton.addEventListener('click', () => {
+            if (!pdfDoc) {
+                alert("Por favor, seleccione un PDF primero.");
+                return;
+            }
+            currentPageNum = 1; 
+            pageNumInput.value = 1;
+            renderPage(currentPageNum);
+            previewModal.style.display = 'flex';
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            previewModal.style.display = 'none';
+        });
+
+        pageNumInput.addEventListener('change', () => {
+            let num = parseInt(pageNumInput.value);
+            if (num > 0 && num <= pdfDoc.numPages) {
+                currentPageNum = num;
+                renderPage(currentPageNum);
+            } else {
+                pageNumInput.value = currentPageNum;
+            }
+        });
+
+        async function loadPdf(file) {
+            const fileReader = new FileReader();
+            fileReader.onload = async function() {
+                const typedarray = new Uint8Array(this.result);
+                pdfDoc = await pdfjsLib.getDocument(typedarray).promise;
+                pageCountSpan.textContent = pdfDoc.numPages;
+                pageNumInput.max = pdfDoc.numPages;
+            };
+            fileReader.readAsArrayBuffer(file);
+        }
+
+        async function renderPage(num) {
+            if (!pdfDoc) return;
+            pageSnapshot = null; 
+            lastRenderedPage = await pdfDoc.getPage(num);
+            
+            const viewport = lastRenderedPage.getViewport({ scale: pdfScale });
+            pdfCanvas.height = viewport.height;
+            pdfCanvas.width = viewport.width;
+
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+            await lastRenderedPage.render(renderContext).promise;
+            
+            pageSnapshot = ctx.getImageData(0, 0, pdfCanvas.width, pdfCanvas.height);
+            selectionRect.isDrawing = false;
+            selectionRect.startX = 0;
+            selectionRect.endX = 0;
+        }
+
+        // --- 9. LÓGICA: Dibujo en Canvas ---
+        pdfCanvas.addEventListener('mousedown', (e) => {
+            if (!pageSnapshot) return; 
+            const rect = pdfCanvas.getBoundingClientRect();
+            selectionRect.startX = e.clientX - rect.left;
+            selectionRect.startY = e.clientY - rect.top;
+            selectionRect.isDrawing = true;
+        });
+
+        pdfCanvas.addEventListener('mousemove', (e) => {
+            if (!selectionRect.isDrawing || !pageSnapshot) return;
+            ctx.putImageData(pageSnapshot, 0, 0); // Restaura la "foto"
+
+            const rect = pdfCanvas.getBoundingClientRect();
+            selectionRect.endX = e.clientX - rect.left;
+            selectionRect.endY = e.clientY - rect.top;
+
+            ctx.strokeStyle = 'rgba(212, 8, 9, 1)'; // Rojo Certicámara
+            ctx.lineWidth = 3;
+            ctx.fillStyle = 'rgba(212, 8, 9, 0.2)'; // Rojo Certicámara (transparente)
+            
+            let width = selectionRect.endX - selectionRect.startX;
+            let height = selectionRect.endY - selectionRect.startY;
+            
+            ctx.fillRect(selectionRect.startX, selectionRect.startY, width, height);
+            ctx.strokeRect(selectionRect.startX, selectionRect.startY, width, height);
+        });
+
+        pdfCanvas.addEventListener('mouseup', () => {
+            selectionRect.isDrawing = false;
+        });
+
+        // --- 10. LÓGICA: Confirmar Selección (Coordenadas) ---
+        confirmSelectionButton.addEventListener('click', () => {
+            if (selectionRect.startX === selectionRect.endX || !lastRenderedPage) {
+                alert("No ha seleccionado un área.");
+                return;
+            }
+
+            const x1_canvas = Math.min(selectionRect.startX, selectionRect.endX);
+            const y1_canvas = Math.min(selectionRect.startY, selectionRect.endY);
+            const x2_canvas = Math.max(selectionRect.startX, selectionRect.endX);
+            const y2_canvas = Math.max(selectionRect.startY, selectionRect.endY);
+            
+            const viewport = lastRenderedPage.getViewport({ scale: pdfScale });
+            const p1 = viewport.convertToPdfPoint(x1_canvas, y1_canvas);
+            const p2 = viewport.convertToPdfPoint(x2_canvas, y2_canvas);
+
+            const lowerLeftX = Math.round(p1[0]);
+            const lowerLeftY = Math.round(p2[1]);
+            const upperRightX = Math.round(p2[0]);
+            const upperRightY = Math.round(p1[1]);
+
+            document.getElementById('lowerLeftX').value = lowerLeftX;
+            document.getElementById('lowerLeftY').value = lowerLeftY;
+            document.getElementById('upperRightX').value = upperRightX;
+            document.getElementById('upperRightY').value = upperRightY;
+            
+            document.getElementById('coord-info').innerText = `✅ Coords: [${lowerLeftX}, ${lowerLeftY}] a [${upperRightX}, ${upperRightY}]`;
+            document.getElementById('coord-info').style.color = 'var(--color-success)';
+            previewModal.style.display = 'none';
+        });
+
+        // --- 11. Evento para actualizar texto de firma al cambiar serial ---
+        serialSelect.addEventListener('change', updateSignatureText);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+2025-11-10 16:10:01,992 - WARNING -  * Debugger is active!
+2025-11-10 16:10:02,001 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:10:09,710 - INFO - 127.0.0.1 - - [10/Nov/2025 16:10:09] "GET / HTTP/1.1" 200 -
+2025-11-10 16:10:09,998 - INFO - 127.0.0.1 - - [10/Nov/2025 16:10:09] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-11-10 16:10:10,396 - INFO - 127.0.0.1 - - [10/Nov/2025 16:10:10] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:10:19,765 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:10:35,139 - INFO - Certificados obtenidos exitosamente.
+2025-11-10 16:10:35,146 - INFO - 127.0.0.1 - - [10/Nov/2025 16:10:35] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:10:42,461 - INFO - Iniciando firma para archivo: ReporteOrdenPedido20200512_122222_857_firmado.pdf
+2025-11-10 16:10:42,469 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:10:42,469 - INFO - Enviando payload de firma para serial: 99411959327123328896492053701988923501
+2025-11-10 16:10:46,266 - ERROR - Error del servicio de firma: 400 - {"successful":false,"error":{"code":"INPUT","message":"Error al validar la petición, se debe enviar el password para el consumo de la estampa"},"requestId":"b4d6b387-933a-4fd0-999a-0979771e5986"}
+2025-11-10 16:10:46,269 - INFO - 127.0.0.1 - - [10/Nov/2025 16:10:46] "[31m[1mPOST /api/sign-pdf HTTP/1.1[0m" 400 -
+2025-11-10 16:10:49,460 - INFO - 127.0.0.1 - - [10/Nov/2025 16:10:49] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:10:49,661 - INFO - 127.0.0.1 - - [10/Nov/2025 16:10:49] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-11-10 16:10:52,855 - INFO - Iniciando firma para archivo: ReporteOrdenPedido20200512_122222_857_firmado.pdf
+2025-11-10 16:10:52,858 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:10:52,858 - INFO - Enviando payload de firma para serial: 99411959327123328896492053701988923501
+2025-11-10 16:10:55,039 - ERROR - Error del servicio de firma: 400 - {"successful":false,"error":{"code":"INPUT","message":"Error al validar la petición, se debe enviar el password para el consumo de la estampa"},"requestId":"e2c99cbb-a8e4-4c6d-9f0f-c4b08b40570e"}
+2025-11-10 16:10:55,043 - INFO - 127.0.0.1 - - [10/Nov/2025 16:10:55] "[31m[1mPOST /api/sign-pdf HTTP/1.1[0m" 400 -
+2025-11-10 16:14:05,931 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 16:14:07,707 - WARNING -  * Debugger is active!
+2025-11-10 16:14:07,718 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:14:24,031 - INFO - 127.0.0.1 - - [10/Nov/2025 16:14:24] "GET / HTTP/1.1" 200 -
+2025-11-10 16:14:24,242 - INFO - 127.0.0.1 - - [10/Nov/2025 16:14:24] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-11-10 16:14:24,585 - INFO - 127.0.0.1 - - [10/Nov/2025 16:14:24] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:17:12,300 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 16:17:13,678 - WARNING -  * Debugger is active!
+2025-11-10 16:17:13,687 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:17:18,785 - INFO - 127.0.0.1 - - [10/Nov/2025 16:17:18] "GET / HTTP/1.1" 200 -
+2025-11-10 16:17:19,110 - INFO - 127.0.0.1 - - [10/Nov/2025 16:17:19] "GET /static/style.css HTTP/1.1" 200 -
+2025-11-10 16:18:18,678 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 16:18:20,054 - WARNING -  * Debugger is active!
+2025-11-10 16:18:20,068 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:18:25,851 - INFO - 127.0.0.1 - - [10/Nov/2025 16:18:25] "GET / HTTP/1.1" 200 -
+2025-11-10 16:18:26,229 - INFO - 127.0.0.1 - - [10/Nov/2025 16:18:26] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:18:38,730 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:18:53,216 - INFO - 127.0.0.1 - - [10/Nov/2025 16:18:53] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:19:03,949 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:19:03,950 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:19:07,385 - INFO - 127.0.0.1 - - [10/Nov/2025 16:19:07] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:19:07,547 - INFO - 127.0.0.1 - - [10/Nov/2025 16:19:07] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-11-10 16:19:13,530 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 16:19:13,536 - INFO - 127.0.0.1 - - [10/Nov/2025 16:19:13] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 16:20:16,403 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:20:16,405 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:20:22,367 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 16:20:22,370 - INFO - 127.0.0.1 - - [10/Nov/2025 16:20:22] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 16:24:00,475 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 16:24:02,020 - WARNING -  * Debugger is active!
+2025-11-10 16:24:02,032 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:24:08,419 - INFO - 127.0.0.1 - - [10/Nov/2025 16:24:08] "GET / HTTP/1.1" 200 -
+2025-11-10 16:24:08,729 - INFO - 127.0.0.1 - - [10/Nov/2025 16:24:08] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:24:19,228 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:24:33,355 - INFO - 127.0.0.1 - - [10/Nov/2025 16:24:33] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:29:37,944 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 16:29:39,428 - WARNING -  * Debugger is active!
+2025-11-10 16:29:39,441 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:29:42,902 - INFO - 127.0.0.1 - - [10/Nov/2025 16:29:42] "GET / HTTP/1.1" 200 -
+2025-11-10 16:29:43,202 - INFO - 127.0.0.1 - - [10/Nov/2025 16:29:43] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:30:04,872 - INFO - 127.0.0.1 - - [10/Nov/2025 16:30:04] "GET / HTTP/1.1" 200 -
+2025-11-10 16:30:04,943 - INFO - 127.0.0.1 - - [10/Nov/2025 16:30:04] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:32:38,359 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 16:32:40,118 - WARNING -  * Debugger is active!
+2025-11-10 16:32:40,128 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:32:40,426 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:40] "GET / HTTP/1.1" 200 -
+2025-11-10 16:32:40,696 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:40] "GET /static/style.css HTTP/1.1" 200 -
+2025-11-10 16:32:43,566 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:43] "GET / HTTP/1.1" 200 -
+2025-11-10 16:32:43,628 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:43] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:32:44,488 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:44] "GET / HTTP/1.1" 200 -
+2025-11-10 16:32:44,554 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:44] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:32:44,673 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:44] "GET / HTTP/1.1" 200 -
+2025-11-10 16:32:44,734 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:44] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:32:44,831 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:44] "GET / HTTP/1.1" 200 -
+2025-11-10 16:32:44,889 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:44] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:32:44,994 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:44] "GET / HTTP/1.1" 200 -
+2025-11-10 16:32:45,056 - INFO - 127.0.0.1 - - [10/Nov/2025 16:32:45] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:32:54,330 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:33:09,865 - INFO - 127.0.0.1 - - [10/Nov/2025 16:33:09] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:33:45,518 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:33:45,519 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:33:51,576 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 16:33:51,579 - INFO - 127.0.0.1 - - [10/Nov/2025 16:33:51] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 16:36:07,438 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:36:07,440 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:36:07,441 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:36:15,174 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 16:36:15,180 - INFO - 127.0.0.1 - - [10/Nov/2025 16:36:15] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 16:36:44,787 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:36:44,788 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:36:44,789 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:36:52,425 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 16:36:52,428 - INFO - 127.0.0.1 - - [10/Nov/2025 16:36:52] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 16:41:09,072 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 16:41:10,620 - WARNING -  * Debugger is active!
+2025-11-10 16:41:10,633 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:41:12,784 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 16:41:14,255 - WARNING -  * Debugger is active!
+2025-11-10 16:41:14,265 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:41:20,809 - INFO - 127.0.0.1 - - [10/Nov/2025 16:41:20] "GET / HTTP/1.1" 200 -
+2025-11-10 16:41:21,233 - INFO - 127.0.0.1 - - [10/Nov/2025 16:41:21] "GET /static/style.css HTTP/1.1" 200 -
+2025-11-10 16:41:21,510 - INFO - 127.0.0.1 - - [10/Nov/2025 16:41:21] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-10 16:41:33,313 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:41:37,834 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:41:49,228 - INFO - 127.0.0.1 - - [10/Nov/2025 16:41:49] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:41:53,193 - INFO - 127.0.0.1 - - [10/Nov/2025 16:41:53] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:42:06,059 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:42:06,060 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:42:11,747 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 16:42:11,750 - INFO - 127.0.0.1 - - [10/Nov/2025 16:42:11] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 16:45:57,499 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 16:45:59,367 - WARNING -  * Debugger is active!
+2025-11-10 16:45:59,508 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:46:02,833 - INFO - 127.0.0.1 - - [10/Nov/2025 16:46:02] "GET / HTTP/1.1" 200 -
+2025-11-10 16:46:03,130 - INFO - 127.0.0.1 - - [10/Nov/2025 16:46:03] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:46:11,634 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:46:15,094 - INFO - 127.0.0.1 - - [10/Nov/2025 16:46:15] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:46:40,014 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:46:40,014 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:46:46,930 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 16:46:46,936 - INFO - 127.0.0.1 - - [10/Nov/2025 16:46:46] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 16:47:26,569 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:47:26,570 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:47:30,476 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 16:47:30,480 - INFO - 127.0.0.1 - - [10/Nov/2025 16:47:30] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 16:47:45,005 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:47:45,006 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:47:51,688 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 16:47:51,691 - INFO - 127.0.0.1 - - [10/Nov/2025 16:47:51] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 16:52:45,346 - INFO - 127.0.0.1 - - [10/Nov/2025 16:52:45] "GET / HTTP/1.1" 200 -
+2025-11-10 16:52:45,432 - INFO - 127.0.0.1 - - [10/Nov/2025 16:52:45] "GET /static/style.css HTTP/1.1" 200 -
+2025-11-10 16:56:18,635 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.11.27:5000
+2025-11-10 16:56:18,636 - INFO - [33mPress CTRL+C to quit[0m
+2025-11-10 16:56:18,639 - INFO -  * Restarting with stat
+2025-11-10 16:56:19,875 - WARNING -  * Debugger is active!
+2025-11-10 16:56:19,890 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 16:56:30,185 - INFO - 127.0.0.1 - - [10/Nov/2025 16:56:30] "GET / HTTP/1.1" 200 -
+2025-11-10 16:56:30,724 - INFO - 127.0.0.1 - - [10/Nov/2025 16:56:30] "GET /static/style.css HTTP/1.1" 200 -
+2025-11-10 16:56:41,379 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:56:57,147 - INFO - 127.0.0.1 - - [10/Nov/2025 16:56:57] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:57:00,256 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:57:00,882 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 16:57:03,156 - INFO - 127.0.0.1 - - [10/Nov/2025 16:57:03] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:57:16,889 - INFO - 127.0.0.1 - - [10/Nov/2025 16:57:16] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 16:57:42,963 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:57:42,964 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:57:51,856 - ERROR - Error del servicio de firma: 409 - {"successful":false,"error":{"code":"RUNTIME","message":"Hubo un error no esperado. por favor contactese con Certicámara con el requestId. Cannot invoke \"java.util.List.iterator()\" because \"listaR\" is null"},"requestId":"f6be5acc-8b3a-4f29-a1be-40b6ab050f35"}
+2025-11-10 16:57:51,860 - INFO - 127.0.0.1 - - [10/Nov/2025 16:57:51] "[31m[1mPOST /api/sign-pdf HTTP/1.1[0m" 409 -
+2025-11-10 16:57:55,426 - INFO - 127.0.0.1 - - [10/Nov/2025 16:57:55] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:57:55,797 - INFO - 127.0.0.1 - - [10/Nov/2025 16:57:55] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-11-10 16:57:58,863 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:57:58,865 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:58:01,744 - ERROR - Error del servicio de firma: 409 - {"successful":false,"error":{"code":"RUNTIME","message":"Hubo un error no esperado. por favor contactese con Certicámara con el requestId. Cannot invoke \"java.util.List.iterator()\" because \"listaR\" is null"},"requestId":"711737e4-ad83-4e59-a787-ee2371f0e12b"}
+2025-11-10 16:58:01,750 - INFO - 127.0.0.1 - - [10/Nov/2025 16:58:01] "[31m[1mPOST /api/sign-pdf HTTP/1.1[0m" 409 -
+2025-11-10 16:58:21,167 - INFO - Texto encriptado con 3DES.
+2025-11-10 16:58:21,167 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 16:58:24,069 - ERROR - Error del servicio de firma: 409 - {"successful":false,"error":{"code":"RUNTIME","message":"Hubo un error no esperado. por favor contactese con Certicámara con el requestId. Cannot invoke \"java.util.List.iterator()\" because \"listaR\" is null"},"requestId":"7db6553c-8451-402f-b50b-7d10b2e5e916"}
+2025-11-10 16:58:24,074 - INFO - 127.0.0.1 - - [10/Nov/2025 16:58:24] "[31m[1mPOST /api/sign-pdf HTTP/1.1[0m" 409 -
+2025-11-10 16:59:39,471 - INFO - 127.0.0.1 - - [10/Nov/2025 16:59:39] "GET / HTTP/1.1" 200 -
+2025-11-10 16:59:39,724 - INFO - 127.0.0.1 - - [10/Nov/2025 16:59:39] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 16:59:39,750 - INFO - 127.0.0.1 - - [10/Nov/2025 16:59:39] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-11-10 17:00:00,222 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 17:00:03,311 - INFO - 127.0.0.1 - - [10/Nov/2025 17:00:03] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 17:01:06,031 - INFO - Texto encriptado con 3DES.
+2025-11-10 17:01:06,032 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 17:01:14,163 - ERROR - Error del servicio de firma: 409 - {"successful":false,"error":{"code":"RUNTIME","message":"Hubo un error no esperado. por favor contactese con Certicámara con el requestId. Cannot invoke \"java.util.List.iterator()\" because \"listaR\" is null"},"requestId":"130ff0ca-b2bc-402e-a618-d97366f87061"}
+2025-11-10 17:01:14,166 - INFO - 127.0.0.1 - - [10/Nov/2025 17:01:14] "[31m[1mPOST /api/sign-pdf HTTP/1.1[0m" 409 -
+2025-11-10 17:01:25,163 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 17:01:25,599 - INFO -  * Restarting with stat
+2025-11-10 17:01:26,965 - WARNING -  * Debugger is active!
+2025-11-10 17:01:26,975 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 17:01:37,186 - INFO - 127.0.0.1 - - [10/Nov/2025 17:01:37] "GET / HTTP/1.1" 200 -
+2025-11-10 17:01:37,545 - INFO - 127.0.0.1 - - [10/Nov/2025 17:01:37] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:01:42,916 - WARNING - Intento de obtener serial sin NUIP o password.
+2025-11-10 17:01:42,919 - INFO - 127.0.0.1 - - [10/Nov/2025 17:01:42] "[31m[1mPOST /api/get-certificates HTTP/1.1[0m" 400 -
+2025-11-10 17:03:12,515 - INFO -  * Detected change in 'c:\\Users\\famil\\Documents\\firmadorPDFweb\\app.py', reloading
+2025-11-10 17:03:12,721 - INFO -  * Restarting with stat
+2025-11-10 17:03:14,266 - WARNING -  * Debugger is active!
+2025-11-10 17:03:14,277 - INFO -  * Debugger PIN: 536-940-114
+2025-11-10 17:03:36,024 - INFO - 127.0.0.1 - - [10/Nov/2025 17:03:36] "GET / HTTP/1.1" 200 -
+2025-11-10 17:03:36,789 - INFO - 127.0.0.1 - - [10/Nov/2025 17:03:36] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:03:45,278 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 17:03:48,350 - INFO - 127.0.0.1 - - [10/Nov/2025 17:03:48] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 17:04:08,954 - INFO - 127.0.0.1 - - [10/Nov/2025 17:04:08] "GET / HTTP/1.1" 200 -
+2025-11-10 17:04:09,009 - INFO - 127.0.0.1 - - [10/Nov/2025 17:04:09] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:04:22,260 - INFO - 127.0.0.1 - - [10/Nov/2025 17:04:22] "[31m[1mPOST /api/get-certificates HTTP/1.1[0m" 400 -
+2025-11-10 17:04:32,705 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 17:04:35,449 - INFO - 127.0.0.1 - - [10/Nov/2025 17:04:35] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 17:05:13,808 - INFO - Texto encriptado con 3DES.
+2025-11-10 17:05:13,811 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 17:05:18,157 - INFO - 127.0.0.1 - - [10/Nov/2025 17:05:18] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:05:18,278 - INFO - 127.0.0.1 - - [10/Nov/2025 17:05:18] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-11-10 17:05:20,019 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 17:05:20,029 - INFO - 127.0.0.1 - - [10/Nov/2025 17:05:20] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 17:10:26,596 - INFO - 127.0.0.1 - - [10/Nov/2025 17:10:26] "GET / HTTP/1.1" 200 -
+2025-11-10 17:10:26,696 - INFO - 127.0.0.1 - - [10/Nov/2025 17:10:26] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:10:26,777 - INFO - 127.0.0.1 - - [10/Nov/2025 17:10:26] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-11-10 17:11:23,854 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 17:11:24,737 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 17:11:39,232 - INFO - 127.0.0.1 - - [10/Nov/2025 17:11:39] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 17:11:39,846 - INFO - 127.0.0.1 - - [10/Nov/2025 17:11:39] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 17:12:01,355 - INFO - Texto encriptado con 3DES.
+2025-11-10 17:12:01,357 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 17:12:08,958 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 17:12:08,962 - INFO - 127.0.0.1 - - [10/Nov/2025 17:12:08] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 17:15:40,786 - INFO - 127.0.0.1 - - [10/Nov/2025 17:15:40] "GET / HTTP/1.1" 200 -
+2025-11-10 17:15:40,823 - INFO - 127.0.0.1 - - [10/Nov/2025 17:15:40] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:15:54,491 - INFO - Consultando certificados para NUIP: 1012322891
+2025-11-10 17:15:57,197 - INFO - 127.0.0.1 - - [10/Nov/2025 17:15:57] "POST /api/get-certificates HTTP/1.1" 200 -
+2025-11-10 17:16:20,618 - INFO - Texto encriptado con 3DES.
+2025-11-10 17:16:20,618 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 17:16:26,509 - INFO - Firma exitosa. Devolviendo archivo PDF.
+2025-11-10 17:16:26,513 - INFO - 127.0.0.1 - - [10/Nov/2025 17:16:26] "POST /api/sign-pdf HTTP/1.1" 200 -
+2025-11-10 17:20:24,537 - INFO - Texto encriptado con 3DES.
+2025-11-10 17:20:24,538 - INFO - Enviando payload de firma COMPLETO para serial: 99411959327123328896492053701988923501
+2025-11-10 17:20:28,061 - INFO - 127.0.0.1 - - [10/Nov/2025 17:20:28] "GET / HTTP/1.1" 200 -
+2025-11-10 17:20:28,415 - INFO - 127.0.0.1 - - [10/Nov/2025 17:20:28] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:20:28,559 - ERROR - Error del servicio de firma: 400 - {"successful":false,"error":{"code":"INPUT","message":"Error al validar la petición, se debe enviar el password para el consumo de la estampa"},"requestId":"6e83e8ec-b5db-4fd3-a3fd-bc4e5c46fc6a"}
+2025-11-10 17:20:28,564 - INFO - 127.0.0.1 - - [10/Nov/2025 17:20:28] "[31m[1mPOST /api/sign-pdf HTTP/1.1[0m" 400 -
+2025-11-10 17:22:30,195 - INFO - 127.0.0.1 - - [10/Nov/2025 17:22:30] "GET / HTTP/1.1" 200 -
+2025-11-10 17:22:30,276 - INFO - 127.0.0.1 - - [10/Nov/2025 17:22:30] "GET /static/style.css HTTP/1.1" 200 -
+2025-11-10 17:24:26,998 - INFO - 127.0.0.1 - - [10/Nov/2025 17:24:26] "GET / HTTP/1.1" 200 -
+2025-11-10 17:24:27,098 - INFO - 127.0.0.1 - - [10/Nov/2025 17:24:27] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:26:01,964 - INFO - 127.0.0.1 - - [10/Nov/2025 17:26:01] "GET / HTTP/1.1" 200 -
+2025-11-10 17:26:02,153 - INFO - 127.0.0.1 - - [10/Nov/2025 17:26:02] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:26:38,947 - INFO - 127.0.0.1 - - [10/Nov/2025 17:26:38] "GET / HTTP/1.1" 200 -
+2025-11-10 17:26:39,153 - INFO - 127.0.0.1 - - [10/Nov/2025 17:26:39] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:28:39,418 - INFO - 127.0.0.1 - - [10/Nov/2025 17:28:39] "GET / HTTP/1.1" 200 -
+2025-11-10 17:28:39,455 - INFO - 127.0.0.1 - - [10/Nov/2025 17:28:39] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:29:33,983 - INFO - 127.0.0.1 - - [10/Nov/2025 17:29:33] "GET / HTTP/1.1" 200 -
+2025-11-10 17:29:34,188 - INFO - 127.0.0.1 - - [10/Nov/2025 17:29:34] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:29:35,600 - INFO - 127.0.0.1 - - [10/Nov/2025 17:29:35] "GET / HTTP/1.1" 200 -
+2025-11-10 17:29:35,626 - INFO - 127.0.0.1 - - [10/Nov/2025 17:29:35] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-11-10 17:29:53,754 - INFO - 127.0.0.1 - - [10/Nov/2025 17:29:53] "GET / HTTP/1.1" 200 -
+2025-11-10 17:29:54,096 - INFO - 127.0.0.1 - - [10/Nov/2025 17:29:54] "GET /static/style.css HTTP/1.1" 200 -

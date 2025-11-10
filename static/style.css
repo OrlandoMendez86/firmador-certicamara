@@ -1,0 +1,497 @@
+/* --- 
+   Archivo de Estilo Principal - TEMA CERTICÁMARA (v3 - Moderno)
+--- */
+
+/* --- 1. Importar Tipografía (Montserrat) --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+/* --- 2. Paleta de Colores y Variables (Certicámara) --- */
+:root {
+    /* Paleta Principal (de image_927bde.png) */
+    --color-primary: #d40809; /* Rojo Certicámara */
+    --color-secondary: #fccc00; /* Amarillo Certicámara */
+    --color-tertiary: #b63553; /* Rosa Certicámara */
+    --color-primary-dark: #b00607; /* Para hovers del rojo */
+    --color-primary-light: #fef0f0; /* Para fondos sutiles */
+    --color-primary-shadow: rgba(212, 8, 9, 0.2);
+
+    /* Gradiente Oficial (Call to Action / Logo) */
+    --gradient-brand: linear-gradient(to right, var(--color-primary) 0%, #f57100 50%, var(--color-secondary) 100%);
+
+    /* Paleta de Grises (Neutral) */
+    --color-text: #333; /* Texto principal */
+    --color-text-secondary: #555; /* Texto de etiquetas */
+    --color-text-light: #777; /* Texto de ayuda */
+    --color-bg: #f4f7fa; /* Fondo general de la página */
+    --color-card-bg: #ffffff;
+    --color-border: #dbe2eb;
+    --color-border-focus: var(--color-primary);
+
+    /* Estados */
+    --color-disabled-bg: #eef2f7;
+    --color-disabled-text: #a0aec0;
+    --color-success: #28a745;
+    --color-error: #dc3545;
+
+    /* Tipografía (de image_927918.png) */
+    --font-family-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-weight-regular: 400;
+    --font-weight-bold: 700;
+    --font-weight-black: 900;
+
+    /* Sombras Modernas */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* --- 3. Estilo General --- */
+body {
+    font-family: var(--font-family-sans); 
+    font-weight: var(--font-weight-regular); 
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* --- 4. Tarjeta Principal (CORREGIDA) --- */
+form#sign-form {
+    background-color: var(--color-card-bg);
+    padding: 40px; /* <-- ¡AQUÍ ESTÁ EL RECUADRO! */
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border);
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto 0 auto; 
+    overflow: hidden; 
+}
+
+/* --- 5. Títulos (h1, h2, h3) (CORREGIDOS) --- */
+
+/* Contenedor para el Título y Eslogan */
+.form-header {
+    text-align: center;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+/* Título H1 - ¡¡AQUÍ ESTÁ LA CORRECCIÓN!! */
+h1.brand-title {
+    font-size: 42px; 
+    font-weight: var(--font-weight-black); 
+    line-height: 1.1;
+    margin: 0;
+    
+    /* ¡EFECTO MODERNO! El gradiente se aplica AL TEXTO, no al fondo */
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    /* --- FIN DE LA CORRECCIÓN --- */
+}
+
+/* Eslogan debajo del título (CORREGIDO) */
+p.brand-slogan {
+    text-align: center;
+    font-size: 15px;
+    font-weight: var(--font-weight-regular); 
+    color: var(--color-text-secondary); /* <-- Texto gris, no blanco */
+    margin: 5px 0 0 0;
+    line-height: 1;
+    /* Se eliminó el 'background: var(--gradient-brand)' de aquí */
+}
+
+/* Títulos de sección (h2) */
+h2 {
+    color: var(--color-primary); 
+    font-size: 16px;
+    font-weight: var(--font-weight-bold);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Títulos de sub-grupos (h3) */
+h3 {
+    color: var(--color-tertiary); 
+    font-weight: var(--font-weight-bold);
+    margin-top: 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* --- 6. Campos de Formulario (Limpio) --- */
+label {
+    display: block;
+    font-weight: var(--font-weight-bold); 
+    margin-bottom: 8px;
+    margin-top: 20px;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px 16px; 
+    font-size: 15px;
+    font-family: var(--font-family-sans); 
+    color: var(--color-text);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border); 
+    border-radius: 8px;
+    box-sizing: border-box; 
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+input[type="file"] { padding: 10px 16px; }
+
+input:focus,
+select:focus {
+    border-color: var(--color-border-focus); 
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 3px var(--color-primary-shadow);
+    outline: none;
+}
+
+/* --- 7. Checkboxes --- */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    padding: 12px;
+    background: var(--color-white);
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.checkbox-container:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+}
+.checkbox-container input[type="checkbox"] { display: none; }
+
+.checkbox-container .checkbox-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-white);
+    margin-right: 12px;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+.checkbox-container input[type="checkbox"]:checked + .checkbox-indicator {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+.checkbox-container input[type="checkbox"]:checked + .checkbox-indicator::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 6px;
+    top: 2px;
+}
+.checkbox-container label {
+    margin: 0;
+    font-weight: var(--font-weight-regular); 
+    font-size: 15px;
+    cursor: pointer;
+    color: var(--color-text);
+}
+
+/* --- 8. Grupos de Configuración Ocultos --- */
+.settings-group {
+    display: none; 
+    background-color: var(--color-primary-light); 
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+.coords-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+}
+.coords-grid label { margin: 0; font-weight: 500; }
+.coords-grid span { font-weight: 600; font-size: 0.9rem; color: var(--color-text-light); }
+
+/* --- 9. Botones --- */
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    margin-top: 25px;
+    box-shadow: var(--shadow-sm);
+}
+button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Botón Secundario (Obtener Seriales) */
+button#fetch-button {
+    background: var(--color-white);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+}
+button#fetch-button:hover:not(:disabled) {
+    background: var(--color-bg);
+    border-color: var(--color-border-dark);
+}
+
+/* Botón Primario (Firmar) - ¡Call to Action! */
+button#sign-button {
+    background: var(--gradient-brand); 
+    color: white;
+    font-size: 16px;
+    font-weight: var(--font-weight-black); 
+    padding: 15px 30px;
+    box-shadow: 0 4px 12px var(--color-primary-shadow);
+}
+button#sign-button:hover:not(:disabled) {
+    box-shadow: 0 6px 16px var(--color-primary-shadow);
+}
+
+/* Estados Deshabilitados */
+button:disabled {
+    background: var(--color-disabled-bg);
+    color: var(--color-disabled-text);
+    cursor: not-allowed;
+    border: 1px solid var(--color-border);
+}
+button#sign-button:disabled {
+    background: var(--color-disabled-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-disabled-text);
+    box-shadow: none;
+}
+
+/* --- 10. Mensaje de Estado --- */
+#status {
+    text-align: center;
+    font-weight: 500;
+    margin-top: 25px;
+    font-size: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    display: block; 
+    color: var(--color-text-light);
+    max-width: 700px;
+    margin: 20px auto;
+}
+
+/* --- 11. Estilos para el Modal de Previsualización --- */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--color-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--color-border);
+}
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--color-primary); 
+    border: none;
+    padding: 0;
+    text-transform: none;
+    letter-spacing: 0;
+}
+.close-button {
+    background: transparent;
+    border: none;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+.close-button:hover { color: var(--color-text); }
+
+.modal-controls {
+    padding: 10px 25px;
+    background: var(--color-bg);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--color-border);
+}
+.modal-controls input[type="number"] {
+    width: 70px;
+    padding: 5px 10px;
+    margin: 0;
+    box-shadow: none;
+}
+.modal-controls span { font-size: 14px; font-weight: 500; }
+
+.modal-body {
+    overflow: auto;
+    padding: 20px;
+    background: var(--color-bg);
+    text-align: center;
+}
+
+#pdf-canvas {
+    box-shadow: var(--shadow-md);
+    cursor: crosshair;
+    border: 1px solid var(--color-border);
+}
+
+.modal-footer {
+    padding: 15px 25px;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: flex-end;
+    background-color: #fafafa;
+}
+
+/* --- 12. Clases de Botones Adicionales --- */
+
+button.button-secondary {
+    border: 1px solid var(--color-border);
+    background: var(--color-white);
+    color: var(--color-text-secondary);
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+    border-radius: 8px;
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+    box-shadow: var(--shadow-sm);
+}
+button.button-secondary:hover:not(:disabled) {
+    border-color: var(--color-border-dark);
+    background-color: var(--color-bg);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+button.button-secondary:disabled {
+    background: var(--color-disabled-bg);
+    color: var(--color-disabled-text);
+    cursor: not-allowed;
+    border-color: var(--color-border);
+}
+
+.file-input-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.file-input-container input[type="file"] { flex-grow: 1; }
+
+button.button-primary {
+    background: var(--color-primary); /* Rojo sólido */
+    color: white;
+    font-size: 1rem;
+    padding: 12px 24px;
+    box-shadow: 0 4px 12px var(--color-primary-shadow);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+}
+button.button-primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--color-primary-shadow);
+}
+
+.status-info-box {
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    background: var(--color-primary-light);
+    padding: 10px;
+    border: 1px dashed var(--color-primary);
+    border-radius: 8px;
+    margin-top: 15px;
+    text-align: center;
+}
+/* --- 13. Estilo para Link como Botón (PRIMARIO) --- */
+
+a.button-link-primary {
+    /* Comportamiento */
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    
+    /* Estilos copiados de button#sign-button */
+    background: var(--gradient-brand); /* ¡Gradiente Oficial! */
+    color: white;
+    font-size: 15px; /* Un poco más pequeño que el de firmar */
+    font-weight: var(--font-weight-bold); /* Montserrat Bold */
+    
+    /* Padding y forma */
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px var(--color-primary-shadow);
+    
+    /* Margen */
+    margin-top: 15px; 
+}
+
+a.button-link-primary:hover {
+    color: white; /* Asegura que el texto siga blanco */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--color-primary-shadow);
+}
