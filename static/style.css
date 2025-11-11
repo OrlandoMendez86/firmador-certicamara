@@ -308,6 +308,8 @@ button#sign-button:disabled {
 
 /* --- 11. Estilos para el Modal de Previsualización --- */
 
+/* --- 11. Estilos para el Modal de Previsualización (MODERNIZADO) --- */
+
 .modal-overlay {
     display: none;
     position: fixed;
@@ -315,14 +317,21 @@ button#sign-button:disabled {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    
+    /* EFECTO MODERNO: Fondo oscuro y difuminado (glassmorphism) */
+    background: rgba(30, 30, 40, 0.6);
+    backdrop-filter: blur(5px);
+    
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    
+    /* EFECTO MODERNO: Animación de entrada (fade-in) */
+    animation: modal-fade-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-content {
-    background: var(--color-white);
+    background: var(--color-card-bg); /* Fondo blanco unificado */
     border-radius: 12px;
     box-shadow: var(--shadow-lg);
     width: 90%;
@@ -330,7 +339,11 @@ button#sign-button:disabled {
     max-height: 90vh;
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--color-border);
+    border: none; /* Sin borde, la sombra es suficiente */
+    overflow: hidden; /* Clave para que el contenido respete el radius */
+    
+    /* EFECTO MODERNO: Animación de entrada (scale-in) */
+    animation: modal-scale-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-header {
@@ -338,33 +351,48 @@ button#sign-button:disabled {
     justify-content: space-between;
     align-items: center;
     padding: 20px 25px;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border); /* Mantenemos un separador sutil */
+    background: var(--color-card-bg); /* Fondo blanco */
 }
 .modal-header h2 {
     margin: 0;
-    font-size: 1.1rem;
-    color: var(--color-primary); 
+    font-size: 1.2rem; /* Título más grande y claro */
+    color: var(--color-text); /* Color de texto principal */
+    font-weight: var(--font-weight-bold);
     border: none;
     padding: 0;
     text-transform: none;
     letter-spacing: 0;
 }
+
+/* EFECTO MODERNO: Botón de cerrar circular y sutil */
 .close-button {
-    background: transparent;
+    background: var(--color-bg);
     border: none;
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: #aaa;
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-light);
     cursor: pointer;
     padding: 0;
     margin: 0;
     line-height: 1;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
-.close-button:hover { color: var(--color-text); }
+.close-button:hover { 
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    transform: rotate(90deg);
+}
 
 .modal-controls {
-    padding: 10px 25px;
-    background: var(--color-bg);
+    padding: 12px 25px;
+    background: var(--color-bg); /* Fondo gris claro para los controles */
     display: flex;
     align-items: center;
     gap: 10px;
@@ -372,31 +400,44 @@ button#sign-button:disabled {
 }
 .modal-controls input[type="number"] {
     width: 70px;
-    padding: 5px 10px;
+    padding: 8px 10px; /* Padding más moderno */
     margin: 0;
     box-shadow: none;
+    font-size: 14px;
+    border-radius: 6px; /* Bordes más suaves */
 }
-.modal-controls span { font-size: 14px; font-weight: 500; }
+.modal-controls span { 
+    font-size: 14px; 
+    font-weight: 500; 
+    color: var(--color-text-secondary);
+}
 
 .modal-body {
     overflow: auto;
-    padding: 20px;
-    background: var(--color-bg);
+    padding: 24px; /* Más aire */
+    background: #eef2f7; /* Un fondo ligeramente más oscuro que el de controles */
     text-align: center;
+    flex-grow: 1; /* Hace que ocupe el espacio disponible */
 }
 
 #pdf-canvas {
     box-shadow: var(--shadow-md);
     cursor: crosshair;
     border: 1px solid var(--color-border);
+    background-color: var(--color-card-bg); /* El canvas es blanco */
 }
 
 .modal-footer {
-    padding: 15px 25px;
-    border-top: 1px solid var(--color-border);
+    padding: 20px 25px;
+    border-top: none; /* Sin borde superior */
     display: flex;
     justify-content: flex-end;
-    background-color: #fafafa;
+    background-color: var(--color-card-bg); /* Fondo blanco */
+    
+    /* EFECTO MODERNO: Sombra sutil para separar del body (si hay scroll) */
+    box-shadow: 0 -5px 15px -5px rgba(0, 0, 0, 0.07);
+    z-index: 10;
+    position: relative;
 }
 
 /* --- 12. Clases de Botones Adicionales --- */
@@ -437,22 +478,22 @@ button.button-secondary:disabled {
 button.button-primary {
     background: var(--color-primary); /* Rojo sólido */
     color: white;
-    font-size: 1rem;
+    font-size: 15px; /* Tamaño consistente */
     padding: 12px 24px;
     box-shadow: 0 4px 12px var(--color-primary-shadow);
     border: none;
     border-radius: 8px;
-    font-weight: 600;
+    font-weight: var(--font-weight-bold); /* Más grueso */
     cursor: pointer;
     width: auto;
     margin: 0;
+    transition: all 0.2s ease; /* Transición suave */
 }
-button.button-primary:hover {
+button.button-primary:hover:not(:disabled) { /* Agrega :not(:disabled) */
     background-color: var(--color-primary-dark);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px var(--color-primary-shadow);
 }
-
 .status-info-box {
     font-size: 0.9rem;
     font-style: italic;
@@ -567,5 +608,24 @@ a.button-link-primary:hover {
     }
 
 }
+/* --- 14. Animaciones de Modal --- */
 
+@keyframes modal-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
+@keyframes modal-scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
