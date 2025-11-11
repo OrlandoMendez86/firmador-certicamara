@@ -138,9 +138,7 @@
             </div>
         </div>
     </div>
-
-
-    <script>
+<script>
         // --- 1. Referencias a elementos del DOM ---
         const nuipInput = document.getElementById('nuip');
         const passInput = document.getElementById('password');
@@ -197,9 +195,9 @@
             }
         }
 
-        // --- 6. Lógica para Obtener Seriales (Completa) ---
+        // --- 6. Lógica para Obtener Seriales (¡CON ALERTS!) ---
         fetchButton.addEventListener('click', async () => {
-            statusDiv.innerText = "Cargando seriales...";
+            statusDiv.innerText = "Cargando seriales..."; // <-- Mensaje de carga se mantiene
             serialSelect.innerHTML = ""; 
             serialSelect.disabled = true;
             signButton.disabled = true;
@@ -210,11 +208,13 @@
                     body: JSON.stringify({ nuip: nuipInput.value, password: passInput.value })
                 });
                 const data = await response.json();
+                statusDiv.innerText = ""; // Limpia el "cargando"
+                
                 if (!response.ok) throw new Error(data.details || 'Error al obtener certificados');
                 
                 const certificates = data.listCertificateResponse;
                 if (!certificates || certificates.length === 0) {
-                     statusDiv.innerText = "No se encontraron certificados.";
+                     alert("No se encontraron certificados para este usuario."); // <-- CAMBIO A ALERTA
                      updateSignatureText(); 
                      return;
                 }
@@ -225,20 +225,24 @@
                     option.dataset.cn = cert.cn; 
                     serialSelect.appendChild(option);
                 });
-                statusDiv.innerText = "Certificados cargados. Listo para firmar.";
+
                 serialSelect.disabled = false;
                 signButton.disabled = false;
                 updateSignatureText(); 
+                
+                alert("¡Certificados cargados! Por favor, seleccione uno de la lista."); // <-- CAMBIO A ALERTA
+
             } catch (err) {
-                statusDiv.innerText = `Error: ${err.message}`;
+                statusDiv.innerText = ""; // Limpia el "cargando"
+                alert(`Error al cargar certificados: ${err.message}`); // <-- CAMBIO A ALERTA
                 updateSignatureText(); 
             }
         });
 
-        // --- 7. Lógica de Firma (Formulario Principal) ---
+        // --- 7. Lógica de Firma (¡CON ALERTS!) ---
         signForm.addEventListener('submit', async (e) => {
             e.preventDefault(); 
-            statusDiv.innerText = "Firmando documento, por favor espere...";
+            statusDiv.innerText = "Firmando documento, por favor espere..."; // <-- Mensaje de carga se mantiene
             signButton.disabled = true;
             const formData = new FormData();
             formData.append('pdf_file', pdfFile.files[0]);
@@ -266,6 +270,8 @@
             }
             try {
                 const response = await fetch('/api/sign-pdf', { method: 'POST', body: formData });
+                statusDiv.innerText = ""; // Limpia el "cargando"
+                
                 if (!response.ok) {
                     const errData = await response.json();
                     throw new Error(errData.error || 'Error desconocido al firmar.');
@@ -280,10 +286,13 @@
                 a.click();
                 window.URL.revokeObjectURL(url);
                 a.remove();
-                statusDiv.innerText = "¡PDF Firmado y descargado!";
+                
+                alert("¡Documento firmado y descargado exitosamente!"); // <-- CAMBIO A ALERTA
                 signButton.disabled = false;
+                
             } catch (err) {
-                statusDiv.innerText = `Error: ${err.message}`;
+                statusDiv.innerText = ""; // Limpia el "cargando"
+                alert(`Error al firmar: ${err.message}`); // <-- CAMBIO A ALERTA
                 signButton.disabled = false;
             }
         });
@@ -310,15 +319,11 @@
             pageNumInput.value = 1;
             renderPage(currentPageNum);
             previewModal.style.display = 'flex';
-            
-            // --- *** ¡CORRECCIÓN #1: BLOQUEA EL SCROLL DE LA PÁGINA! *** ---
             document.body.style.overflow = 'hidden';
         });
 
         closeModalButton.addEventListener('click', () => {
             previewModal.style.display = 'none';
-            
-            // --- *** ¡CORRECCIÓN #2: DEVUELVE EL SCROLL DE LA PÁGINA! *** ---
             document.body.style.overflow = 'auto';
         });
 
@@ -364,15 +369,13 @@
             selectionRect.endX = 0;
         }
 
-        // --- 9. LÓGICA: Dibujo en Canvas (¡¡ACTUALIZADA PARA TÁCTIL!!) ---
-
+        // --- 9. LÓGICA: Dibujo en Canvas (TÁCTIL) ---
         function getEventCoords(e) {
             if (e.touches && e.touches.length > 0) {
                 return { x: e.touches[0].clientX, y: e.touches[0].clientY };
             }
             return { x: e.clientX, y: e.clientY };
         }
-
         function onDrawStart(e) {
             if (!pageSnapshot) return; 
             e.preventDefault(); 
@@ -382,7 +385,6 @@
             selectionRect.startY = coords.y - rect.top;
             selectionRect.isDrawing = true;
         }
-
         function onDrawMove(e) {
             if (!selectionRect.isDrawing || !pageSnapshot) return;
             e.preventDefault(); 
@@ -391,68 +393,52 @@
             const coords = getEventCoords(e);
             selectionRect.endX = coords.x - rect.left;
             selectionRect.endY = coords.y - rect.top;
-
             ctx.strokeStyle = 'rgba(212, 8, 9, 1)'; 
             ctx.lineWidth = 3;
             ctx.fillStyle = 'rgba(212, 8, 9, 0.2)';
-            
             let width = selectionRect.endX - selectionRect.startX;
             let height = selectionRect.endY - selectionRect.startY;
-            
             ctx.fillRect(selectionRect.startX, selectionRect.startY, width, height);
             ctx.strokeRect(selectionRect.startX, selectionRect.startY, width, height);
         }
-
         function onDrawEnd(e) {
             if (!selectionRect.isDrawing) return;
             e.preventDefault();
             selectionRect.isDrawing = false;
         }
-
-        // Asignar eventos de Mouse
         pdfCanvas.addEventListener('mousedown', onDrawStart);
         pdfCanvas.addEventListener('mousemove', onDrawMove);
         pdfCanvas.addEventListener('mouseup', onDrawEnd);
         pdfCanvas.addEventListener('mouseleave', onDrawEnd); 
-
-        // Asignar eventos Táctiles (para celulares)
         pdfCanvas.addEventListener('touchstart', onDrawStart, { passive: false });
         pdfCanvas.addEventListener('touchmove', onDrawMove, { passive: false });
         pdfCanvas.addEventListener('touchend', onDrawEnd);
         pdfCanvas.addEventListener('touchcancel', onDrawEnd); 
 
         // --- 10. LÓGICA: Confirmar Selección (Coordenadas) ---
-        
         confirmSelectionButton.addEventListener('click', () => {
             if (selectionRect.startX === selectionRect.endX || !lastRenderedPage) {
                 alert("No ha seleccionado un área.");
                 return;
             }
-
             const x1_canvas = Math.min(selectionRect.startX, selectionRect.endX);
             const y1_canvas = Math.min(selectionRect.startY, selectionRect.endY);
             const x2_canvas = Math.max(selectionRect.startX, selectionRect.endX);
             const y2_canvas = Math.max(selectionRect.startY, selectionRect.endY);
-            
             const viewport = lastRenderedPage.getViewport({ scale: pdfScale });
             const p1 = viewport.convertToPdfPoint(x1_canvas, y1_canvas);
             const p2 = viewport.convertToPdfPoint(x2_canvas, y2_canvas);
-
             const lowerLeftX = Math.round(p1[0]);
             const lowerLeftY = Math.round(p2[1]);
             const upperRightX = Math.round(p2[0]);
             const upperRightY = Math.round(p1[1]);
-
             document.getElementById('lowerLeftX').value = lowerLeftX;
             document.getElementById('lowerLeftY').value = lowerLeftY;
             document.getElementById('upperRightX').value = upperRightX;
             document.getElementById('upperRightY').value = upperRightY;
-            
             document.getElementById('coord-info').innerText = `✅ Coords: [${lowerLeftX}, ${lowerLeftY}] a [${upperRightX}, ${upperRightY}]`;
             document.getElementById('coord-info').style.color = 'var(--color-success)';
             previewModal.style.display = 'none';
-            
-            // --- *** ¡CORRECCIÓN #3: DEVUELVE EL SCROLL AL CONFIRMAR! *** ---
             document.body.style.overflow = 'auto';
         });
 
