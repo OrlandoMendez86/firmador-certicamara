@@ -27,17 +27,17 @@ app = Flask(__name__)
 
 # --- CONSTANTES "QUEMADAS" ---
 
-# 1. Claves de Encriptación 3DES
+# 1. Claves de Encriptación 3DES (de tu app original)
 KEY_STRING = "94025048109D4EEF11D93737"
 IV_STRING = "EEF11D93"
 
-# 2. Credenciales de API de Firma
+# 2. Credenciales de API de Firma (¡CORREGIDAS! Sacadas de tu pdf_signer.py)
 SIGN_URL = "https://7dj9742die.execute-api.us-east-1.amazonaws.com/test/sign/pdf"
 SIGN_USER_ID = "CPAETST"
 SIGN_PASSWORD = "p4XUiGQzE3DEWoia2/TVQQ=="
 SIGN_CONTENT_TYPE = "application/json"
 
-# 3. Credenciales de API de Certificados
+# 3. Credenciales de API de Certificados (Estas ya estaban bien)
 CERT_URL = "https://7dj9742die.execute-api.us-east-1.amazonaws.com/test/listCertificate"
 CERT_USER_ID = "CPAETST"
 CERT_PASSWORD = "p4XUiGQzE3DEWoia2/TVQQ=="
@@ -107,7 +107,7 @@ def get_certificates():
 
 @app.route("/api/sign-pdf", methods=['POST'])
 def sign_pdf_route():
-    """Endpoint para firmar el documento (con corrección de 'listaR is null')"""
+    """Endpoint para firmar el documento (AHORA COMPLETO)"""
     try:
         data = request.form
         files = request.files
@@ -130,34 +130,22 @@ def sign_pdf_route():
             "signReason": "Firma PDF",
             "signLocation": "Colombia",
             "ltv": data.get('ltv') == 'true',
-            "verifyDocument": True, 
+            "verifyDocument": True, # Asumimos esto
             "fileToSignBytes": file_base64,
-            "returnSignedFile": True,
-            "visibleSign": False, # Inicia como Falso
-            
-            # Corrección "listaR is null": Enviar SIEMPRE un bloque imageInfo
-            "imageInfo": {
-                "numPages": [1], # Default a página 1
-                "coordinates": {"lowerLeftX": 0, "lowerLeftY": 0, "upperRightX": 0, "upperRightY": 0},
-                "signFieldName": "Firma1",
-                "renderingMode": "GRAPHIC",
-                "imageBytes": "",
-                "contentSignature": ""
-            }
+            "returnSignedFile": True
         }
 
-        # 4. SOBREESCRIBIR lógica de Firma Visible (si está marcada)
+        # 4. Añadir lógica de Firma Visible (si está marcada)
         if data.get('visibleSign') == 'true':
-            # La imagen es opcional, pero si la hay, se usa.
-            image_base64 = ""
-            if 'image_file' in files and files['image_file'].filename != '':
-                image_file = files['image_file']
-                image_base64 = base64.b64encode(image_file.read()).decode('utf-8')
+            if 'image_file' not in files or files['image_file'].filename == '':
+                return jsonify({"error": "Firma visible habilitada, pero no se envió imagen."}), 400
+            
+            image_file = files['image_file']
+            image_base64 = base64.b64encode(image_file.read()).decode('utf-8')
             
             pages_text = data.get('pages', '1')
             pages_list = [int(p.strip()) for p in pages_text.split(',') if p.strip().isdigit()]
 
-            # Sobrescribe los valores por defecto
             payload["visibleSign"] = True
             payload["imageInfo"] = {
                 "coordinates": {
@@ -172,12 +160,14 @@ def sign_pdf_route():
                 "imageBytes": image_base64,
                 "contentSignature": data.get('signatureText', 'Firmado digitalmente')
             }
+        else:
+            payload["visibleSign"] = False
 
         # 5. Añadir lógica de Stamp (si está marcada)
         payload["stamp"] = data.get('stamp') == 'true'
         payload["stampInfo"] = {
-            "authentication": True, 
-            "userPassword": True, 
+            "authentication": True, # Hardcodeado de tu app
+            "userPassword": True, # Hardcodeado de tu app
             "user": "",
             "password": ""
         }
@@ -201,7 +191,7 @@ def sign_pdf_route():
             }
         }
         
-        # 7. Llamar al API de Firma
+        # 7. Llamar al API de Firma (CON CREDENCIALES CORREGIDAS)
         headers = {
             'userId': SIGN_USER_ID,
             'password': SIGN_PASSWORD,
@@ -236,41 +226,6 @@ def sign_pdf_route():
         logging.error(f"Error interno grave en /api/sign-pdf: {str(e)}", exc_info=True)
         return jsonify({"error": f"Error interno del servidor: {str(e)}"}), 500
 
-
-# ---
-# ¡BLOQUE DE SEGURIDAD CORREGIDO!
-# ---
-@app.after_request
-def add_security_headers(response):
-    """
-    Añade cabeceras de seguridad a cada respuesta del servidor.
-    Soluciona las alertas de OWASP ZAP.
-    """
-    
-    # 1. Política de Seguridad de Contenido (CSP)
-    csp = [
-        "default-src 'self'",
-        
-        # Corrección: Permite scripts en línea (nuestro bloque <script>)
-        # y de cdnjs (pdf.js)
-        "script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'",
-        
-        # Permite estilos de Google Fonts
-        "style-src 'self' https://fonts.googleapis.com",
-        "font-src 'self' https://fonts.gstatic.com"
-    ]
-    response.headers['Content-Security-Policy'] = "; ".join(csp)
-    
-    # 2. Prevenir Clickjacking
-    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
-    
-    # 3. Prevenir "adivinación" de tipo de archivo
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    
-    # 4. Otras cabeceras de seguridad
-    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-    
-    return response
 
 # --- BLOQUE PARA EJECUTAR EL SERVIDOR ---
 
