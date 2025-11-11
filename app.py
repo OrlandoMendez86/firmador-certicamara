@@ -229,38 +229,6 @@ def sign_pdf_route():
 
 # --- BLOQUE PARA EJECUTAR EL SERVIDOR ---
 
-# ---
-# ¡NUEVO BLOQUE DE SEGURIDAD!
-# ---
-@app.after_request
-def add_security_headers(response):
-    """
-    Añade cabeceras de seguridad a cada respuesta del servidor.
-    Esto soluciona las alertas de OWASP ZAP.
-    """
-    # Le dice al navegador de dónde puede cargar cosas.
-    csp = [
-        "default-src 'self'",  # Por defecto, solo confiar en nuestro propio dominio.
-        "script-src 'self' https://cdnjs.cloudflare.com", # Permitir scripts de nuestro dominio y de cdnjs (pdf.js)
-        "style-src 'self' https://fonts.googleapis.com", # Permitir CSS de nuestro dominio y de Google Fonts
-        "font-src 'self' https://fonts.gstatic.com" # Permitir fuentes de nuestro dominio y de Google Fonts
-    ]
-    response.headers['Content-Security-Policy'] = "; ".join(csp)
-    
-    # 2. Prevenir Clickjacking (Falta de cabecera Anti-Clickjacking)
-    # Impide que la app sea metida en un <iframe> en otro sitio.
-    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
-    
-    # 3. Prevenir que el navegador "adivine" el tipo de archivo
-    # (Soluciona X-Content-Type-Options)
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    
-    # 4. Otras cabeceras de seguridad recomendadas
-    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-    
-    return response
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
 
-    app.run(host='0.0.0.0', port=5000, debug=True)
