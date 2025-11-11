@@ -45,15 +45,22 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
+
 /* --- 3. Estilo General --- */
 body {
     font-family: var(--font-family-sans); 
     font-weight: var(--font-weight-regular); 
-    background-color: var(--color-bg);
+    background-color: var(--color-bg); /* El fondo base sigue siendo gris */
     color: var(--color-text);
     min-height: 100vh;
     padding: 40px;
     box-sizing: border-box;
+    
+    /* --- AÑADIR ESTO --- */
+    position: relative; /* Necesario para los pseudo-elementos */
+    overflow-x: hidden; /* Evita que los 'blobs' causen scroll horizontal */
+    z-index: 0; /* Establece un contexto de apilamiento */
+    /* --- FIN DE LO AÑADIDO --- */
 }
 
 /* --- 4. Tarjeta Principal (CORREGIDA) --- */
@@ -628,4 +635,41 @@ a.button-link-primary:hover {
         opacity: 1;
         transform: scale(1);
     }
+}
+/* --- 15. Fondo de "Blobs" Moderno --- */
+/* Estilos base para los 'blobs' */
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+    z-index: -1; /* Los pone detrás del contenido y del formulario */
+    border-radius: 50%;
+    
+    /* EFECTO MODERNO: Desenfoque MUY grande */
+    filter: blur(120px); 
+    
+    /* --- ¡CAMBIO AQUÍ! --- */
+    /* Opacidad aumentada para ser más notorio */
+    opacity: 0.3; /* <-- MÁS ALTO (antes 0.15) */
+    
+    /* Evita que se muevan al hacer scroll */
+    position: fixed; 
+}
+
+/* Blob 1 (Rosa/Terciario) */
+body::before {
+    background: var(--color-tertiary);
+    width: 400px;
+    height: 400px;
+    top: -150px;  /* Esquina superior izquierda */
+    left: -150px;
+}
+
+/* Blob 2 (Amarillo/Secundario) */
+body::after {
+    background: var(--color-secondary);
+    width: 500px;
+    height: 500px;
+    bottom: -200px; /* Esquina inferior derecha */
+    right: -200px;
 }
